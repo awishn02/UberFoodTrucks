@@ -5,6 +5,7 @@ import os
 from flask import Flask, g, jsonify, render_template, request, abort
 from pymongo import MongoClient, Connection, GEO2D
 from bson.json_util import dumps
+from bson.son import SON
 
 client = MongoClient('mongodb://awishn02:Reds0x9!@ds047478.mongolab.com:47478/heroku_app18310921')
 #client = MongoClient();
@@ -21,27 +22,16 @@ def index():
 
 @app.route("/trucks", methods=['GET'])
 def all_trucks():
-	#return dumps(food_trucks.find({"location":{"$near":[37.77493,-122.419416]}})[0:10])
-	return dumps(db.food_trucks.find({"loc":{"$near":[-122.419416,37.77493]}})[0:15])
+	distance = 3959/180
+	return dumps(db.command(SON([('geoNear', 'food_trucks'), ('near', [-122.416449,37.748378]), ('limit', 10), ('distanceMultiplier', distance)])))
 
 def dbSetup():
-	#db = client.heroku_app18310921
-	#db = uberdb.food_trucks
-	#food_trucks = db.food_trucks
 	jsonurl = urllib.urlopen("https://data.sfgov.org/Permitting/Mobile-Food-Facility-Permit/rqzj-sfat.json")
 	trucks = json.loads(jsonurl.read())
 	db.food_trucks.create_index([("loc", GEO2D)])
-	#db.food_trucks.insert({"loc": [2, 5]})
-	#db.food_trucks.insert({"loc": [30, 5]})
-	#db.food_trucks.insert({"loc": [1, 2]})
-	#for doc in db.food_truck.find({"loc": {"$near": [3, 6]}}).limit(3):
-	#	repr(doc)
-	#food_trucks.insert(trucks)
 	for truck in trucks:
 		if truck.has_key('location'):
 			truck['loc'] = [float(truck['location']['longitude']), float(truck['location']['latitude'])]
-			#truck['type'] = 'Point'
-			#truck['coordinates'] = [float(truck['location']['longitude']), float(truck['location']['latitude'])]
 			food_trucks.insert(truck)
 
 

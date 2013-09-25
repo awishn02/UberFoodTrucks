@@ -6,7 +6,22 @@ $(function(){
 
 	var TruckList = Backbone.Collection.extend({
 		model: truck,
-		url: '/trucks'
+		url: '/trucks',
+		fetch : function() {
+		    // store reference for this collection
+		    var collection = this;
+		    $.ajax({
+		        type : 'GET',
+		        url : this.url,
+		        dataType : 'json',
+		        success : function(data) {
+		            //console.log(data);
+		            // set collection data (assuming you have retrieved a json object)
+		            collection.reset(data)
+		            getPosition(data)
+		        }
+		    });
+		}
 	})
 
 	var Trucks = new TruckList;
@@ -17,7 +32,7 @@ $(function(){
 			//this.listenTo(Trucks, 'reset', this.addAll);
 			//this.listenTo(Trucks, 'all', this.render);
 			Trucks.fetch();
-			Trucks.on('reset', getPosition);
+			//Trucks.on('reset', getPosition);
 		},
 		log: function(){
 			initializeMap;
@@ -35,17 +50,17 @@ $(function(){
 
 	var App = new AppView;
 
-	function getPosition(){
+	function getPosition(data){
 		if (navigator.geolocation){
-    		navigator.geolocation.getCurrentPosition(initializeMap);
+    		navigator.geolocation.getCurrentPosition(function(position){initializeMap(position, data)});
     	}
 	}
 
 	var infowindow;
 
-	function initializeMap(position){
+	function initializeMap(position, data){
 		//var myLatlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-		var myLatlng = new google.maps.LatLng(37.77493, -122.419416);
+		var myLatlng = new google.maps.LatLng(37.748378, -122.416449);
 	  	var mapOptions = {
 	    	zoom: 20,
 		    center: myLatlng,
@@ -64,14 +79,24 @@ $(function(){
 			position: myLatlng
 		});
 		person.setIcon(iconFile);
-	  	Trucks.forEach(function(truck){
+		//console.log(data);
+		results = data['results']
+	  	results.forEach(function(truck){
 	  		marker = new google.maps.Marker({
                 map: map,
                 optimized: false, 
-                position: new google.maps.LatLng(truck.get('latitude'),truck.get('longitude'))
+                position: new google.maps.LatLng(truck['obj']['loc'][1],truck['obj']['loc'][0])
             });
             google.maps.event.addListener(marker, 'click', function(){
-            	infowindow.setContent('<p>'+truck.get('applicant')+'</p>')
+            	distance = truck['dis'];
+            	if(distance < .1){
+            		distance *= 5280;
+            		distance = distance.toPrecision(3) +  " ft";
+            	}else{
+            		distance = distance.toPrecision(2) + " mi";
+            	}
+            	console.log(distance + " miles");
+            	infowindow.setContent('<p>'+truck['obj']['applicant']+'</p><p>'+distance+'</p>')
             	infowindow.open(map, this);
             })
 	  	});
