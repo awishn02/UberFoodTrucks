@@ -41,9 +41,11 @@ $(function(){
     	}
 	}
 
+	var infowindow;
+
 	function initializeMap(position){
 		//var myLatlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-		var myLatlng = new google.maps.LatLng(Trucks.at(0).get('latitude'), Trucks.at(0).get('longitude'));
+		var myLatlng = new google.maps.LatLng(37.77493, -122.419416);
 	  	var mapOptions = {
 	    	zoom: 20,
 		    center: myLatlng,
@@ -51,13 +53,27 @@ $(function(){
 	  	};
 	  	var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
+	  	infowindow = new google.maps.InfoWindow({
+	  		content: "hold"
+	  	})
+
+		iconFile = "http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png";
+
+		var person = new google.maps.Marker({
+			map: map,
+			position: myLatlng
+		});
+		person.setIcon(iconFile);
 	  	Trucks.forEach(function(truck){
 	  		marker = new google.maps.Marker({
                 map: map,
                 optimized: false, 
                 position: new google.maps.LatLng(truck.get('latitude'),truck.get('longitude'))
             });
-            console.log(truck.get('latitude')+", " +truck.get('longitude'))
+            google.maps.event.addListener(marker, 'click', function(){
+            	infowindow.setContent('<p>'+truck.get('applicant')+'</p>')
+            	infowindow.open(map, this);
+            })
 	  	});
 	}
 });
