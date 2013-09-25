@@ -18,7 +18,7 @@ def all_trucks():
 	return dumps(client.uberdb.food_trucks.find())
 
 def dbSetup():
-	db = client.uberdb
+	db = client.heroku_app18310921
 	food_trucks = db.food_trucks
 	jsonurl = urllib.urlopen("https://data.sfgov.org/Permitting/Mobile-Food-Facility-Permit/rqzj-sfat.json")
 	trucks = json.loads(jsonurl.read())
