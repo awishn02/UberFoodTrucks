@@ -6,13 +6,13 @@ from flask import Flask, g, jsonify, render_template, request, abort
 from pymongo import MongoClient, Connection, GEO2D
 from bson.json_util import dumps
 
-#client = MongoClient('mongodb://awishn02:Reds0x9!@ds047478.mongolab.com:47478/heroku_app18310921')
+client = MongoClient('mongodb://awishn02:Reds0x9!@ds047478.mongolab.com:47478/heroku_app18310921')
 #client = MongoClient();
 app = Flask(__name__)
 
-#db = client.heroku_app18310921
+db = client.heroku_app18310921
 #db = client.uberdb
-db = Connection().uberdb
+#db = Connection().uberdb
 food_trucks = db.food_trucks
 
 @app.route('/')
