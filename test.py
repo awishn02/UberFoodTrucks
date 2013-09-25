@@ -6,7 +6,7 @@ from flask import Flask, g, jsonify, render_template, request, abort
 from pymongo import MongoClient
 from bson.json_util import dumps
 
-client = MongoClient()
+client = MongoClient('mongodb://awishn02:Reds0x9!@ds047478.mongolab.com:47478/heroku_app18310921')
 app = Flask(__name__)
 
 @app.route('/')
