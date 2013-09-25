@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<title>Food Truck Locator</title>
+	<style>
+		html { height: 100%; margin: 0; padding: 0;}
+		body { height: 100%; margin: 0; padding: 0}
+		#map-canvas { width: 100%; height: 100%; margin: 0; padding: 0 }
+	</style>
+	</head>
+
+	<body>
+		<div id="map-canvas" style="width:100%; height: 100% !important;"></div>
+
+	  	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false" style=""></script>
+		<script src="{{url_for('static', filename='js/json2.js')}}"></script>
+	  	<script src="{{url_for('static', filename='js/jquery.js')}}"></script>
+	  	<script src="{{url_for('static', filename='js/underscore.js')}}"></script>
+	  	<script src="{{url_for('static', filename='js/backbone-min.js')}}"></script>
+	  	<script src="{{url_for('static', filename='js/trucks.js')}}"></script>
+	</body>
+
+</html>
