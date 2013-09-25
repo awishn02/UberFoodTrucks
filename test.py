@@ -10,13 +10,17 @@ client = MongoClient('mongodb://awishn02:Reds0x9!@ds047478.mongolab.com:47478/he
 #client = MongoClient();
 app = Flask(__name__)
 
+db = client.heroku_app18310921
+#db = uberdb.food_trucks
+food_trucks = db.food_trucks
+
 @app.route('/')
 def index():
 	return render_template('index.html')
 
 @app.route("/trucks", methods=['GET'])
 def all_trucks():
-	return dumps(client.uberdb.food_trucks.find())
+	return dumps(food_trucks.find())
 
 def dbSetup():
 	db = client.heroku_app18310921
