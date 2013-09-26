@@ -4,15 +4,23 @@
 	<meta charset="utf-8">
 	<title>Food Truck Locator</title>
 	<link type="text/css" rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+	<link type="text/css" rel="stylesheet" href="{{url_for('static', filename='icons.css')}}">
 	<link type="text/css" rel="stylesheet" href="{{url_for('static', filename='jquery-ui.min.css')}}">
 	</head>
 
 	<body>
 		<div id="map-canvas">
+		<!--
 			<div class="map-overlay">
-				<div id="search-icon"></div>
+				<div id="search-icon"><div id="icon" class="icon-arrow-up-2"></div></div>
 				<input type="text" id="map-search" placeholder="Search"/>
-			</div>	
+			</div>
+			-->
+			<div class="map-overlay">
+				<input class="box-shadow" type="text" id="map-search" placeholder="Location"/>
+				<div id="more" class="box-shadow"><div id="morebtn" class="icon-plus-2"></div></div>
+				<div class="box-shadow" id="map-filter"></div>
+			</div>
 		</div>
 
 	  	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false&libraries=places" style=""></script>

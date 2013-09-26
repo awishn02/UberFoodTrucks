@@ -13,7 +13,6 @@ app = Flask(__name__)
 
 db = client.heroku_app18310921
 #db = client.uberdb
-#db = Connection().uberdb
 food_trucks = db.food_trucks
 
 @app.route('/')
@@ -22,15 +21,12 @@ def index():
 
 @app.route("/trucks", methods=['GET'])
 def all_trucks():
-	distance = 3959/180
-	app.logger.debug('Getting all trucks')
-	return dumps(db.command(SON([('geoNear', 'food_trucks'), ('near', [-122.416449,37.748378]), ('limit', 20), ('distanceMultiplier', distance)])))
-
+	return dumps(db.food_trucks.find())
+	
 @app.route("/trucks/<string:lat>/<string:lng>", methods=['GET'])
 def get_trucks(lat, lng):
 	distance = 3959/180
-	app.logger.debug('Getting trucks')
-	return dumps(db.command(SON([('geoNear', 'food_trucks'), ('near', [float(lng),float(lat)]), ('limit', 20), ('distanceMultiplier', distance)])))
+	return dumps(db.command(SON([('geoNear', 'food_trucks'), ('near', [float(lng),float(lat)]), ('limit', 20), ('distanceMultiplier', distance), ('query', {'status':'APPROVED'})])))
 
 def dbSetup():
 	jsonurl = urllib.urlopen("https://data.sfgov.org/Permitting/Mobile-Food-Facility-Permit/rqzj-sfat.json")

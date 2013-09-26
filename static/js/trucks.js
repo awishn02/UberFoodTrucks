@@ -51,7 +51,7 @@ $(function() {
 	function initializeMap(position) {
 		var myLatlng = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
 		var mapOptions = {
-			zoom: 20,
+			zoom: 16,
 			center: myLatlng,
 			mapTypeId: google.maps.MapTypeId.ROADMAP,
 			noClear: true
@@ -68,7 +68,8 @@ $(function() {
 
 		var person = new google.maps.Marker({
 			map: map,
-			position: myLatlng
+			position: myLatlng,
+			optimized: false
 		}); 
 		markers.push(person);
 		person.setIcon(iconFile);
@@ -80,6 +81,7 @@ $(function() {
 			var marker = new google.maps.Marker({
 				map: map,
 				optimized: false,
+    			animation: google.maps.Animation.DROP,
 				position: new google.maps.LatLng(truck['obj']['loc'][1], truck['obj']['loc'][0])
 			});
 			markers.push(marker);
@@ -92,7 +94,8 @@ $(function() {
 					distance = distance.toPrecision(2) + " mi";
 				}
 				console.log(distance + " miles");
-				infowindow.setContent('<p>' + truck['obj']['applicant'] + '</p><p>' + distance + '</p>')
+				infowindow.setContent('<p>' + truck['obj']['applicant'] + '</p><p>' + distance + '</p>' +
+									  '<p class="items">' + truck['obj']['fooditems'] + '</p>')
 				infowindow.open(map, this);
 			})
 		});
@@ -120,4 +123,8 @@ $(function() {
 		Trucks.fetch({url:"/trucks/"+lat+"/"+lng})
         map.setCenter(latlng);
     });
+
+    $("#morebtn").click(function(){
+    	$("#map-filter").slideToggle();
+    })
 });

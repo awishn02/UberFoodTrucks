@@ -15,46 +15,66 @@ body{
 	padding: 0;
 	z-index: 100;
 }
+
 .map-overlay{
-	position: absolute;
-	top: 20px;
-	left: 5%;
-	width: 90%;
-	background: white;
-	height: 50px;
-	z-index: 10000;
-
-	border: 1px solid #ebebeb;
 	position: relative;
-	background-color: #FFFFFF;
-	box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.025);
-
-	border-radius: 7px;
+	top: 20px;
+	left: 50%;
+	margin-left: -25%;
+	z-index: 10000;
 }
+
+.box-shadow{
+	box-shadow: 0 2px 6px rgba(0,0,0,0.3),0 4px 15px -5px rgba(0,0,0,0.0)
+}
+
 #map-search{
 	position: absolute;
-	width: 92%;
-	height: 96%;
-	right: 0;
-	border:2px solid #dadada;
-    border-radius:7px;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    font-size: 40px;
+	outline: none;
+	width: 500px;
+	height: 35px;
+	font-size: 18px;
+	display: inline;
+	margin-right: 0;
+	padding-right: 0;
+	border: none;
+	vertical-align: top;
+	outline: none;
 }
 
-::-webkit-input-placeholder {
-   color: rgba(0,0,0,.25);
-}
-
-#search-icon{
+#more{
 	position: absolute;
-	width:7%;
-	height: 100%;
-	left: 0;
-	background: url('images/one-six.png') no-repeat center;
-	border:2px solid #dadada;
-    border-radius:7px;
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
+	left: 500px;
+	width: 50px;
+	height: 37px;
+	background-color: rgb(57,56,67);
+	background-image:-webkit-linear-gradient(top,#4d90fe,#4787ed)
+	display: inline-block;
+	margin-left: 0;
+	padding-left: 0;
+	color: white;
+	border: none;
+}
+
+#more div{
+	position: absolute;
+	left: 50%;
+	margin-left: -20%;
+	top: 50%;
+	margin-top: -20%;
+	cursor: pointer;
+}
+
+.items {
+	max-width: 100px;
+}
+
+#map-filter {
+	position: absolute;
+	top: 37px;
+	height: 100px;
+	width: 550px;
+	display: none;
+	background-color: white;
+	z-index: 10000;
 }
