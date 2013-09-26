@@ -7,12 +7,12 @@ from pymongo import MongoClient, Connection, GEO2D
 from bson.json_util import dumps
 from bson.son import SON
 
-client = MongoClient('mongodb://awishn02:Reds0x9!@ds047478.mongolab.com:47478/heroku_app18310921')
-#client = MongoClient();
+#client = MongoClient('mongodb://awishn02:Reds0x9!@ds047478.mongolab.com:47478/heroku_app18310921')
+client = MongoClient();
 app = Flask(__name__)
 
-db = client.heroku_app18310921
-#db = client.uberdb
+#db = client.heroku_app18310921
+db = client.uberdb
 #db = Connection().uberdb
 food_trucks = db.food_trucks
 
@@ -23,7 +23,14 @@ def index():
 @app.route("/trucks", methods=['GET'])
 def all_trucks():
 	distance = 3959/180
-	return dumps(db.command(SON([('geoNear', 'food_trucks'), ('near', [-122.416449,37.748378]), ('limit', 10), ('distanceMultiplier', distance)])))
+	app.logger.debug('Getting all trucks')
+	return dumps(db.command(SON([('geoNear', 'food_trucks'), ('near', [-122.416449,37.748378]), ('limit', 20), ('distanceMultiplier', distance)])))
+
+@app.route("/trucks/<string:lat>/<string:lng>", methods=['GET'])
+def get_trucks(lat, lng):
+	distance = 3959/180
+	app.logger.debug('Getting trucks')
+	return dumps(db.command(SON([('geoNear', 'food_trucks'), ('near', [float(lng),float(lat)]), ('limit', 20), ('distanceMultiplier', distance)])))
 
 def dbSetup():
 	jsonurl = urllib.urlopen("https://data.sfgov.org/Permitting/Mobile-Food-Facility-Permit/rqzj-sfat.json")
