@@ -7,12 +7,12 @@ from pymongo import MongoClient, Connection, GEO2D
 from bson.json_util import dumps
 from bson.son import SON
 
-#client = MongoClient('mongodb://awishn02:Reds0x9!@ds047478.mongolab.com:47478/heroku_app18310921')
-client = MongoClient();
+client = MongoClient('mongodb://awishn02:Reds0x9!@ds047478.mongolab.com:47478/heroku_app18310921')
+#lient = MongoClient();
 app = Flask(__name__)
 
-#db = client.heroku_app18310921
-db = client.uberdb
+db = client.heroku_app18310921
+#db = client.uberdb
 food_trucks = db.food_trucks
 
 @app.route('/')
