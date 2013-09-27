@@ -106,4 +106,8 @@ body{
 	#more{
 		height: 43px;
 	}
+
+	#map-filter {
+		top: 43px;
+	}
 }
