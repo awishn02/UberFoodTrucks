@@ -26,7 +26,7 @@ def all_trucks():
 @app.route("/trucks/<string:lat>/<string:lng>", methods=['GET'])
 def get_trucks(lat, lng):
 	distance = 3959/180
-	return dumps(db.command(SON([('geoNear', 'food_trucks'), ('near', [float(lng),float(lat)]), ('limit', 20), ('distanceMultiplier', distance), ('query', {'status':'APPROVED'})])))
+	return dumps(db.command(SON([('geoNear', 'food_trucks'), ('near', [float(lng),float(lat)]), ('limit', 100), ('distanceMultiplier', distance), ('query', {'status':'APPROVED'})])))
 
 def dbSetup():
 	jsonurl = urllib.urlopen("https://data.sfgov.org/Permitting/Mobile-Food-Facility-Permit/rqzj-sfat.json")

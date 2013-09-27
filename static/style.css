@@ -19,9 +19,9 @@ body{
 
 .map-overlay{
 	position: relative;
-	top: 20px;
+	top: 0;
 	left: 50%;
-	margin-left: -25%;
+	margin-left: -275px;
 	z-index: 10000;
 }
 
@@ -78,4 +78,23 @@ body{
 	display: none;
 	background-color: white;
 	z-index: 10000;
+}
+
+@media (max-width: 550px){
+	.map-overlay{;
+		margin: 0;
+		padding: 0;
+		left: 0;
+		top: 0;
+	}
+	#map-search{
+		width:90%;
+		margin: 0;
+		left: 0;
+	}
+
+	#more{
+		width:10%;
+		left: 90%;
+	}
 }
