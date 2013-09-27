@@ -110,7 +110,7 @@ body{
 		top: 0;
 	}
 	#map-search{
-		width:90%;
+		width:80%;
 		margin: 0;
 		left: 0;
 		height: 100px;
@@ -118,7 +118,8 @@ body{
 	}
 
 	#more{
-		width:10%;
-		left: 90%;
+		width: 20%;
+		left: 80%;
+		height: 102px;
 	}
 }
