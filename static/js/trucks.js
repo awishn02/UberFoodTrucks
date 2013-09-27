@@ -1,5 +1,6 @@
 $(function() {
 	// Food truck model
+	var curPos;
 	var truck = Backbone.Model.extend({
 		initialize: function(){
 			if(!this.get('applicant')){
@@ -28,7 +29,9 @@ $(function() {
 	    },
 	    center: function(){
 	    	$("#trucks").removeClass('show');	
-	    	map.panTo(new google.maps.LatLng(this.model['obj']['loc'][1], this.model['obj']['loc'][0]))
+	    	destination = new google.maps.LatLng(this.model['obj']['loc'][1], this.model['obj']['loc'][0])
+	    	map.panTo(destination)
+	    	calcRoute(destination)
 	    },
 	    clear: function(){
 	    	this.model.destroy()
@@ -85,8 +88,13 @@ $(function() {
 	var latitude;
 	var longitude;
 
+	var directionsDisplay;
+	var directionsService = new google.maps.DirectionsService();
+
 	function initializeMap(position) {
 		var myLatlng = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+  		directionsDisplay = new google.maps.DirectionsRenderer();
+		curPos = myLatlng;
 		var mapOptions = {
 			zoom: 17,
 			center: myLatlng,
@@ -94,6 +102,7 @@ $(function() {
 			noClear: true
 		};
 		map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  		directionsDisplay.setMap(map);
 
 		var geocoder = new google.maps.Geocoder();
 
@@ -110,6 +119,22 @@ $(function() {
 		}); 
 		markers.push(person);
 		person.setIcon(iconFile);
+	}
+
+	function calcRoute(destination) {
+	  var request = {
+	      origin: curPos,
+	      destination: destination,
+	      // Note that Javascript allows us to access the constant
+	      // using square brackets and a string value as its
+	      // "property."
+	      travelMode: google.maps.TravelMode["WALKING"]
+	  };
+	  directionsService.route(request, function(response, status) {
+	    if (status == google.maps.DirectionsStatus.OK) {
+	      directionsDisplay.setDirections(response);
+	    }
+	  });
 	}
 
 	function placeMarkers(data){
@@ -158,6 +183,7 @@ $(function() {
 		markers.push(marker);
 		Trucks.fetch({url:"/trucks/"+lat+"/"+lng})
         map.setCenter(latlng);
+        curPos = latlng;
     });
 
     $("#more").click(function(){

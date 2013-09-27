@@ -99,10 +99,31 @@ body{
 
 #truck-list li {
 	cursor: pointer;
-	padding: 18px 20px 18px 0;
+	width: 100%;
 	position: relative;
-	font-size: 24px;
-	border-bottom: 1px solid #cccccc;
+  	font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+  	border-bottom: 1px solid #ccc;
+}
+
+#truck-list div{
+	cursor: pointer;
+	overflow-x: hidden;
+  padding: 0 10px;
+  text-decoration: none;
+  color: #000;
+  display: block;
+  width: 95%;
+ 
+  -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -o-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -ms-transition: font-size 0.3s ease, background-color 0.3s ease;
+  transition: font-size 0.3s ease, background-color 0.3s ease;
+}
+
+#truck-list div:hover{
+  	font-size: 30px;
+  	background: #f6f6f6;
 }
 
 #truck-list li label {
@@ -110,7 +131,8 @@ body{
 }
 
 #truck-list li label span {
-	float: right;
+	position: absolute;
+	right: 10px;
 }
 
 .items {
