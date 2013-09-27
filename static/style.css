@@ -98,3 +98,12 @@ body{
 		left: 90%;
 	}
 }
+
+@media 
+(-webkit-min-device-pixel-ratio: 2), 
+(min-resolution: 192dpi) { 
+    /* Retina-specific stuff here */
+	#more{
+		height: 35px;
+	}
+}
