@@ -48,7 +48,6 @@ $(function() {
 	var AppView = Backbone.View.extend({
 		el: $("#list-area"),
 		initialize: function() {
-			Trucks.on('reset', placeMarkers);
       		Trucks.on('reset', this.addAll);
 			getPosition();
 		},
@@ -58,15 +57,30 @@ $(function() {
 		render: function() {
 
 		},
-		addOne: function(truck) {
-	      	var view = new TruckView({model: truck});
-    	  	this.$("#truck-list").append(view.render().el);
-		},
 		addAll: function(data) {	
 			results = jQuery.parseJSON(JSON.stringify(data))[0]['results']
 			results.forEach(function(truck){
 				var view = new TruckView({model: truck});
     	  		this.$("#truck-list").append(view.render().el);
+				var marker = new google.maps.Marker({
+					map: map,
+					optimized: false,
+	    			animation: google.maps.Animation.DROP,
+					position: new google.maps.LatLng(truck['obj']['loc'][1], truck['obj']['loc'][0])
+				});
+				markers.push(marker);
+				google.maps.event.addListener(marker, 'click', function() {
+					distance = truck['dis'];
+					if (distance < .1) {
+						distance *= 5280;
+						distance = distance.toPrecision(3) + " ft";
+					} else {
+						distance = distance.toPrecision(2) + " mi";
+					}
+					infowindow.setContent('<p>' + truck['obj']['applicant'] + '</p><p>' + distance + '</p>' +
+										  '<p class="items">' + truck['obj']['fooditems'] + '</p>')
+					infowindow.open(map, this);
+				})
 			});
 		}
 	});
@@ -135,31 +149,6 @@ $(function() {
 	      directionsDisplay.setDirections(response);
 	    }
 	  });
-	}
-
-	function placeMarkers(data){
-		results = jQuery.parseJSON(JSON.stringify(data))[0]['results']
-		results.forEach(function(truck) {
-			var marker = new google.maps.Marker({
-				map: map,
-				optimized: false,
-    			animation: google.maps.Animation.DROP,
-				position: new google.maps.LatLng(truck['obj']['loc'][1], truck['obj']['loc'][0])
-			});
-			markers.push(marker);
-			google.maps.event.addListener(marker, 'click', function() {
-				distance = truck['dis'];
-				if (distance < .1) {
-					distance *= 5280;
-					distance = distance.toPrecision(3) + " ft";
-				} else {
-					distance = distance.toPrecision(2) + " mi";
-				}
-				infowindow.setContent('<p>' + truck['obj']['applicant'] + '</p><p>' + distance + '</p>' +
-									  '<p class="items">' + truck['obj']['fooditems'] + '</p>')
-				infowindow.open(map, this);
-			})
-		});
 	}
 	function removeMarkers(){
 		for(var i = 0; i < markers.length; i++){
