@@ -98,28 +98,3 @@ body{
 		left: 90%;
 	}
 }
-
-@media 
-(-webkit-min-device-pixel-ratio: 2), 
-(min-resolution: 192dpi) { 
-    /* Retina-specific stuff here */
-	.map-overlay{
-		margin: 0;
-		padding: 0;
-		left: 0;
-		top: 0;
-	}
-	#map-search{
-		width:80%;
-		margin: 0;
-		left: 0;
-		height: 100px;
-		font-size: 95px;
-	}
-
-	#more{
-		width: 20%;
-		left: 80%;
-		height: 102px;
-	}
-}
