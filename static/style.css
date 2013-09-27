@@ -104,6 +104,6 @@ body{
 (min-resolution: 192dpi) { 
     /* Retina-specific stuff here */
 	#more{
-		height: 40px;
+		height: 42px;
 	}
 }
