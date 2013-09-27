@@ -160,7 +160,7 @@ $(function() {
         map.setCenter(latlng);
     });
 
-    $("#morebtn").click(function(){
+    $("#more").click(function(){
     	$("#trucks").toggleClass('show');
     })
 });

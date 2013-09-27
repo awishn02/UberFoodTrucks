@@ -51,6 +51,7 @@ body{
 	padding-left: 0;
 	color: white;
 	border: none;
+	cursor: pointer;
 }
 
 #more div{
@@ -124,6 +125,23 @@ body{
 	display: none;
 	background-color: white;
 	z-index: 10000;
+}
+
+.box-shadow-menu {
+  position: relative;
+  padding-left: 1.25em;
+}
+.box-shadow-menu:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.25em;
+  width: 1em;
+  height: 0.15em;
+  background: white;
+  box-shadow: 
+    0 0.25em 0 0 white,
+    0 0.5em 0 0 white;
 }
 
 @media (max-width: 550px){
