@@ -13,7 +13,8 @@ body{
 	height: 100% !important; 
 	margin: 0; 
 	padding: 0;
-	z-index: 100;
+	z-index: 100;;
+	background: transparent url('images/484.gif') no-repeat center center;
 }
 
 .map-overlay{
