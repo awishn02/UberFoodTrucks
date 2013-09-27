@@ -18,6 +18,10 @@
 			</div>
 		</div>
 
+		<div id="trucks" class="box-shadow">
+			<ul id="truck-list"></ul>
+		</div>
+
 	  	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false&libraries=places" style=""></script>
 		<script src="{{url_for('static', filename='js/json2.js')}}"></script>
 	  	<script src="{{url_for('static', filename='js/jquery.js')}}"></script>
@@ -25,6 +29,13 @@
 	  	<script src="{{url_for('static', filename='js/underscore.js')}}"></script>
 	  	<script src="{{url_for('static', filename='js/backbone-min.js')}}"></script>
 	  	<script src="{{url_for('static', filename='js/trucks.js')}}"></script>
+
+	  	  <script type="text/template" id="truck-template">
+		    <div class="view">
+		      <label><%= obj.applicant %><span><%= dis %></label>
+		      <input type="hidden" value="<%= obj.objectid %>"/>
+		    </div>
+		  </script>
 	</body>
 
 </html>

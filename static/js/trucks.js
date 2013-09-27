@@ -1,7 +1,38 @@
 $(function() {
 	// Food truck model
 	var truck = Backbone.Model.extend({
+		initialize: function(){
+			if(!this.get('applicant')){
+				this.set({"applicant": "poop"})
+			}
+		}
+	});
 
+	var TruckView = Backbone.View.extend({
+		tagName: "li",
+    	template: _.template($('#truck-template').html()),
+    	events: {
+    		"click .view" : "center"
+    	},
+	    render: function() {
+	    	distance = this.model['dis'];
+			if (distance < .1) {
+				distance *= 5280;
+				distance = distance.toPrecision(3) + " ft";
+			} else {
+				distance = distance.toPrecision(2) + " mi";
+			}
+			this.model['dis'] = distance;
+	      	$(this.el).html(this.template(this.model));
+	      	return this;
+	    },
+	    center: function(){
+	    	$("#trucks").removeClass('show');	
+	    	map.panTo(new google.maps.LatLng(this.model['obj']['loc'][1], this.model['obj']['loc'][0]))
+	    },
+	    clear: function(){
+	    	this.model.destroy()
+	    }
 	});
 
 	var TruckList = Backbone.Collection.extend({
@@ -15,6 +46,7 @@ $(function() {
 		el: $("#list-area"),
 		initialize: function() {
 			Trucks.on('reset', placeMarkers);
+      		Trucks.on('reset', this.addAll);
 			getPosition();
 		},
 		log: function() {
@@ -23,11 +55,16 @@ $(function() {
 		render: function() {
 
 		},
-		addOne: function(todo) {
-			this.$("#list").append(todo['address']);
+		addOne: function(truck) {
+	      	var view = new TruckView({model: truck});
+    	  	this.$("#truck-list").append(view.render().el);
 		},
-		addAll: function() {
-			Trucks.each(this.addOne);
+		addAll: function(data) {	
+			results = jQuery.parseJSON(JSON.stringify(data))[0]['results']
+			results.forEach(function(truck){
+				var view = new TruckView({model: truck});
+    	  		this.$("#truck-list").append(view.render().el);
+			});
 		}
 	});
 
@@ -93,7 +130,6 @@ $(function() {
 				} else {
 					distance = distance.toPrecision(2) + " mi";
 				}
-				console.log(distance + " miles");
 				infowindow.setContent('<p>' + truck['obj']['applicant'] + '</p><p>' + distance + '</p>' +
 									  '<p class="items">' + truck['obj']['fooditems'] + '</p>')
 				infowindow.open(map, this);
@@ -125,6 +161,6 @@ $(function() {
     });
 
     $("#morebtn").click(function(){
-    	$("#map-filter").slideToggle();
+    	$("#trucks").toggleClass('show');
     })
 });

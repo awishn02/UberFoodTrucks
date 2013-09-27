@@ -25,10 +25,6 @@ body{
 	z-index: 10000;
 }
 
-.box-shadow{
-	box-shadow: 0 2px 6px rgba(0,0,0,0.3),0 4px 15px -5px rgba(0,0,0,0.0)
-}
-
 #map-search{
 	position: absolute;
 	outline: none;
@@ -66,6 +62,56 @@ body{
 	cursor: pointer;
 }
 
+.box-shadow{
+	box-shadow: 0 2px 6px rgba(0,0,0,0.3),0 4px 15px -5px rgba(0,0,0,0.0)
+}
+
+#trucks{
+	width: 550px;
+	height: 80%;
+	position: absolute;
+	max-width: 600px;
+	top: -80%;
+	left: 50%;
+	margin-left: -275px;
+	z-index: 1000;
+	background-color: white;
+	overflow-x: hidden;
+	overflow: scroll;
+
+	transition: all 1.0s ease;
+	-webkit-transition: all 1.0s ease;
+	-moz-transition: all 1.0s ease;
+	-o-transition: all 1.0s ease;
+}
+
+#trucks.show{
+	top: 10%;
+}
+
+#truck-list {
+	margin: 0;
+	list-style: none;
+	padding: 0;
+	width: 100%;
+}
+
+#truck-list li {
+	cursor: pointer;
+	padding: 18px 20px 18px 0;
+	position: relative;
+	font-size: 24px;
+	border-bottom: 1px solid #cccccc;
+}
+
+#truck-list li label {
+	padding: 0 10px;
+}
+
+#truck-list li label span {
+	float: right;
+}
+
 .items {
 	max-width: 100px;
 }
@@ -96,6 +142,12 @@ body{
 	#more{
 		width:10%;
 		left: 90%;
+	}
+
+	#trucks{
+		width: 100%;
+		left: 0;
+		margin: 0;
 	}
 }
 
