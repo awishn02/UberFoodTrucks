@@ -70,13 +70,7 @@ $(function() {
 				});
 				markers.push(marker);
 				google.maps.event.addListener(marker, 'click', function() {
-					distance = truck['dis'];
-					if (distance < .1) {
-						distance *= 5280;
-						distance = distance.toPrecision(3) + " ft";
-					} else {
-						distance = distance.toPrecision(2) + " mi";
-					}
+					var distance = truck['dis'];
 					infowindow.setContent('<p>' + truck['obj']['applicant'] + '</p><p>' + distance + '</p>' +
 										  '<p class="items">' + truck['obj']['fooditems'] + '</p>')
 					infowindow.open(map, this);
