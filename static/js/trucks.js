@@ -3,9 +3,6 @@ $(function() {
 	var curPos;
 	var truck = Backbone.Model.extend({
 		initialize: function(){
-			if(!this.get('applicant')){
-				this.set({"applicant": "poop"})
-			}
 		}
 	});
 
