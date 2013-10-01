@@ -150,8 +150,9 @@ $(function() {
 	var autocomplete = new google.maps.places.Autocomplete($("#map-search")[0], {});
 	google.maps.event.addListener(autocomplete, 'place_changed', function() {
         var place = autocomplete.getPlace();
-        lat = place['geometry']['location']['nb'];
-        lng = place['geometry']['location']['ob'];
+        console.log(place);
+        lat = place['geometry']['location']['lb'];
+        lng = place['geometry']['location']['mb'];
         removeMarkers();
 		var latlng = new google.maps.LatLng(lat, lng);
 		var marker = new google.maps.Marker({
