@@ -38,7 +38,8 @@ def get_trucks(lat, lng):
                                  ('query', {'status': 'APPROVED'})])))
 
 
-@app.route("/trucks/<string:lat>/<string:lng>/<string:food_type>", methods=['GET'])
+@app.route("/trucks/<string:lat>/<string:lng>/<string:food_type>",
+           methods=['GET'])
 def search_food(lat, lng, food_type):
     distance = 3959 / 180
     return dumps(db.command(SON([('geoNear', 'food_trucks'),
@@ -46,7 +47,11 @@ def search_food(lat, lng, food_type):
                                  ('near', [float(lng), float(lat)]),
                                  ('limit', 100),
                                  ('distanceMultiplier', distance),
-                                 ('query', {'status': 'APPROVED', 'fooditems':{'$regex':food_type, '$options': 'i'}})])))
+                                 ('query', {'status': 'APPROVED', 'fooditems':
+                                            {
+                                                '$regex': food_type,
+                                                '$options': 'i'
+                                            }})])))
 
 
 def dbSetup():

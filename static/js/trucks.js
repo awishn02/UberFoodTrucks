@@ -28,8 +28,7 @@ $(function() {
 		},
 		center: function() {
 			$("#trucks").removeClass("show");
-			var destination = new google.maps.LatLng(this.model.job.loc[1], this.model.obj.loc[0]);
-			map.panTo(destination);
+			var destination = new google.maps.LatLng(this.model.obj.loc[1], this.model.obj.loc[0]);
 			calcRoute(destination);
 		},
 		clear: function() {
@@ -78,10 +77,10 @@ $(function() {
 						"<p class='items'>" + truck.obj.fooditems + "</p>");
 					infowindow.open(map, this);
 				});
-				google.maps.event.addListener(marker, 'mouseout', function(){
+				google.maps.event.addListener(marker, "mouseout", function() {
 					infowindow.close();
-				})
-				google.maps.event.addListener(marker, "click", function(){
+				});
+				google.maps.event.addListener(marker, "click", function() {
 					calcRoute(new google.maps.LatLng(truck.obj.loc[1], truck.obj.loc[0]));
 				});
 			});
@@ -91,6 +90,7 @@ $(function() {
 	var App = new AppView();
 
 	// Get User's Current Location //
+
 	function getPosition() {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(function(position) {
@@ -141,6 +141,7 @@ $(function() {
 	}
 
 	// Calculate Walking Directions //
+
 	function calcRoute(destination) {
 		var request = {
 			origin: curPos,
@@ -190,17 +191,17 @@ $(function() {
 		$("#trucks").toggleClass("show");
 	});
 
-	$("#filter").keypress(function(e){
-		if(e.which == 13){
-			if($(this).val() != ""){
+	$("#filter").keypress(function(e) {
+		if (e.which == 13) {
+			if ($(this).val() != "") {
 				removeMarkers();
 				Trucks.fetch({
-					url: "/trucks/"+curPos.lb + "/" + curPos.mb + "/" + $(this).val()
+					url: "/trucks/" + curPos.lb + "/" + curPos.mb + "/" + $(this).val()
 				});
-			}else{
+			} else {
 				removeMarkers();
 				Trucks.fetch({
-					url: "/trucks/"+curPos.lb + "/" + curPos.mb
+					url: "/trucks/" + curPos.lb + "/" + curPos.mb
 				});
 			}
 		}
